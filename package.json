@@ -1,0 +1,33 @@
+{
+  "name": "pagecall",
+  "version": "0.0.1",
+  "description": "pagecall sdk for NodeJS developers",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf ./dist && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pplink/pagecall-sdk-nodejs.git"
+  },
+  "keywords": [
+    "pagecall",
+    "sdk",
+    "pplink",
+    "pagecall.io"
+  ],
+  "author": "ppLINK-RyanPark",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pplink/pagecall-sdk-nodejs/issues"
+  },
+  "homepage": "https://github.com/pplink/pagecall-sdk-nodejs#readme",
+  "dependencies": {
+    "@types/restler": "^3.1.5",
+    "restler": "^3.4.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  }
+}
