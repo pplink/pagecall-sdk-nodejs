@@ -37,10 +37,12 @@ export interface ReplayParam {
 export interface ConnectWithResponse {
   html: string;
   roomId: string;
+  busy?: boolean;
 }
 export interface ConnectInResponse {
   html: string;
   roomId: string;
+  busy?: boolean;
 }
 export interface ReplayResponse {
   html: string;
