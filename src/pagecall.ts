@@ -20,6 +20,7 @@ export interface ConnectWithParam {
   userData?: string;
   roomData?: string;
   appName?: string;
+  appVersion?: string;
 }
 export interface ConnectInParam {
   userId: string;
@@ -28,6 +29,7 @@ export interface ConnectInParam {
   userData?: string;
   roomData?: string;
   appName?: string;
+  appVersion?: string;
 }
 export interface ReplayParam {
   roomId: string;
