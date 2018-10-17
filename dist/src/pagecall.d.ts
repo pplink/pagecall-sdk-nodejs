@@ -34,6 +34,9 @@ export interface ReplayParam {
     appName?: string;
     appVersion?: string;
 }
+export interface ReplayLegacyParam {
+    noteFile: string;
+}
 export interface ConnectWithResponse {
     html: string;
     roomId: string;
@@ -56,6 +59,7 @@ export declare class PageCall {
     connectWith(param: ConnectWithParam): Promise<ConnectWithResponse>;
     connectIn(param: ConnectInParam): Promise<ConnectInResponse>;
     replay(param: ReplayParam): Promise<ReplayResponse>;
+    replayLegacy(param: ReplayLegacyParam): Promise<ReplayResponse>;
     private tokenValid;
     private restPost;
 }

@@ -64,6 +64,19 @@ var PageCall = /** @class */ (function () {
             return err;
         });
     };
+    PageCall.prototype.replayLegacy = function (param) {
+        var _this = this;
+        return this.getToken()
+            .then(function (token) {
+            return _this.restPost(_this.param.apiEndPoint + '/connection/replay-legacy', param, { 'Authorization': "bearer " + token.token });
+        })
+            .then(function (data) {
+            return data;
+        })
+            .catch(function (err) {
+            return err;
+        });
+    };
     PageCall.prototype.tokenValid = function () {
         return this.currentToken && (this.currentToken.exp * 1000) - Date.now() > 60000; // safe padding 1 minutes;
     };

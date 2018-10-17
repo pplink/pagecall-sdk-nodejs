@@ -36,6 +36,9 @@ export interface ReplayParam {
   appName?: string;
   appVersion?:string;
 }
+export interface ReplayLegacyParam {
+  noteFile: string;
+}
 export interface ConnectWithResponse {
   html: string;
   roomId: string;
@@ -102,6 +105,18 @@ export class PageCall {
     return this.getToken()
       .then(token => {
         return this.restPost(this.param.apiEndPoint + '/connection/replay', param, {'Authorization': `bearer ${token.token}`})
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        return err;
+      });
+  }
+  replayLegacy(param: ReplayLegacyParam): Promise<ReplayResponse> {
+    return this.getToken()
+      .then(token => {
+        return this.restPost(this.param.apiEndPoint + '/connection/replay-legacy', param, {'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
