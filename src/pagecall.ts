@@ -32,6 +32,7 @@ export interface ConnectInParam {
   appName?: string;
   appVersion?: string;
   templateName?: string;
+  template?:string;
 }
 export interface ReplayParam {
   roomId: string;
