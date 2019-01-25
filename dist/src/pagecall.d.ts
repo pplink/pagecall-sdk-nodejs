@@ -24,7 +24,7 @@ export interface ConnectWithParam {
 export interface ConnectInParam {
     userId: string;
     publicRoomId: string;
-    allowedTime: string;
+    allowedTime?: string;
     userData?: string;
     roomData?: string;
     appName?: string;
