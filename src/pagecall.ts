@@ -26,13 +26,13 @@ export interface ConnectWithParam {
 export interface ConnectInParam {
   userId: string;
   publicRoomId: string;
-  allowedTime?: string;
-  userData?: string;
-  roomData?: string;
+  allowedTime?: string | number;
+  userData?: string | object;
+  roomData?: string | object;
+  template?:string | object;
   appName?: string;
   appVersion?: string;
   templateName?: string;
-  template?:string;
 }
 export interface ReplayParam {
   roomId: string;
@@ -80,6 +80,10 @@ export class PageCall {
     });
   }
 
+  /**
+   * @Deprecated
+   * @param param
+   */
   connectWith(param: ConnectWithParam): Promise<ConnectWithResponse> {
     return this.getToken()
       .then(token => {
@@ -95,7 +99,12 @@ export class PageCall {
   connectIn(param: ConnectInParam): Promise<ConnectInResponse> {
     return this.getToken()
       .then(token => {
-        return this.restPost(this.param.apiEndPoint + '/connection/in', param, { 'Authorization': `bearer ${token.token}`})
+        const safeParam = {...param};
+        safeParam.allowedTime = param.allowedTime + ''; // stringify
+        safeParam.userData = typeof param.userData === 'string' ? param.userData : JSON.stringify(param.userData);
+        safeParam.roomData = typeof param.roomData === 'string' ? param.roomData : JSON.stringify(param.roomData);
+        safeParam.template = typeof param.template === 'string' ? param.template : JSON.stringify(param.template);
+        return this.restPost(this.param.apiEndPoint + '/connection/in', safeParam, { 'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
