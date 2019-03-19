@@ -24,13 +24,13 @@ export interface ConnectWithParam {
 export interface ConnectInParam {
     userId: string;
     publicRoomId: string;
-    allowedTime?: string;
-    userData?: string;
-    roomData?: string;
+    allowedTime?: string | number;
+    userData?: string | object;
+    roomData?: string | object;
+    template?: string | object;
     appName?: string;
     appVersion?: string;
     templateName?: string;
-    template?: string;
 }
 export interface ReplayParam {
     roomId: string;
@@ -59,6 +59,10 @@ export declare class PageCall {
     keyPair: ApiKeyPair;
     constructor(param: PageCallParam);
     getToken(): Promise<Token>;
+    /**
+     * @Deprecated
+     * @param param
+     */
     connectWith(param: ConnectWithParam): Promise<ConnectWithResponse>;
     connectIn(param: ConnectInParam): Promise<ConnectInResponse>;
     replay(param: ReplayParam): Promise<ReplayResponse>;

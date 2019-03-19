@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var rest = require("restler");
 var PageCall = /** @class */ (function () {
@@ -25,6 +36,10 @@ var PageCall = /** @class */ (function () {
             }
         });
     };
+    /**
+     * @Deprecated
+     * @param param
+     */
     PageCall.prototype.connectWith = function (param) {
         var _this = this;
         return this.getToken()
@@ -42,7 +57,12 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + '/connection/in', param, { 'Authorization': "bearer " + token.token });
+            var safeParam = __assign({}, param);
+            safeParam.allowedTime = param.allowedTime + ''; // stringify
+            safeParam.userData = typeof param.userData === 'string' ? param.userData : JSON.stringify(param.userData);
+            safeParam.roomData = typeof param.roomData === 'string' ? param.roomData : JSON.stringify(param.roomData);
+            safeParam.template = typeof param.template === 'string' ? param.template : JSON.stringify(param.template);
+            return _this.restPost(_this.param.apiEndPoint + '/connection/in', safeParam, { 'Authorization': "bearer " + token.token });
         })
             .then(function (data) {
             return data;
