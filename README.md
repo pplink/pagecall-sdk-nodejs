@@ -4,7 +4,7 @@
 ```npm install --save pagecall```
 
 ## 2. Import
-### Typescript
+### ES6+
 ```typescript
 import {PageCall} from 'pagecall';
 ``` 
