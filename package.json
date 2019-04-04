@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf ./dist && tsc"
   },
+  "homepage": "https://www.pagecall.io",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pplink/pagecall-sdk-nodejs.git"
