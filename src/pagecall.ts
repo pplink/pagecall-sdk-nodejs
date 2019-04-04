@@ -13,6 +13,10 @@ export interface Token {
   token: string;
   exp: number;
 }
+
+/**
+ * @Deprecated
+ */
 export interface ConnectWithParam {
   userId: string;
   partnerId: string;
@@ -33,6 +37,7 @@ export interface ConnectInParam {
   appName?: string;
   appVersion?: string;
   templateName?: string;
+  autoFinish?: 'true' | 'false'
 }
 export interface ReplayParam {
   roomId: string;
