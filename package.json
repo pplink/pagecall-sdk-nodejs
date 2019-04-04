@@ -1,6 +1,6 @@
 {
   "name": "pagecall",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "pagecall sdk for NodeJS developers",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf ./dist && tsc"
   },
-  "homepage": "https://www.pagecall.io",
+  "homepage": "https://github.com/pplink/pagecall-sdk-nodejs#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pplink/pagecall-sdk-nodejs.git"
@@ -24,7 +24,6 @@
   "bugs": {
     "url": "https://github.com/pplink/pagecall-sdk-nodejs/issues"
   },
-  "homepage": "https://github.com/pplink/pagecall-sdk-nodejs#readme",
   "dependencies": {
     "@types/restler": "^3.1.5",
     "restler": "^3.4.0",
