@@ -71,6 +71,32 @@ var PageCall = /** @class */ (function () {
             return err;
         });
     };
+    PageCall.prototype.finish = function (param) {
+        var _this = this;
+        return this.getToken()
+            .then(function (token) {
+            return _this.restPost(_this.param.apiEndPoint + '/connection/finish', param, { 'Authorization': "bearer " + token.token });
+        })
+            .then(function (data) {
+            return data;
+        })
+            .catch(function (err) {
+            return err;
+        });
+    };
+    PageCall.prototype.onGoing = function () {
+        var _this = this;
+        return this.getToken()
+            .then(function (token) {
+            return _this.restPost(_this.param.apiEndPoint + '/information/ongoing', {}, { 'Authorization': "bearer " + token.token });
+        })
+            .then(function (data) {
+            return data;
+        })
+            .catch(function (err) {
+            return err;
+        });
+    };
     PageCall.prototype.replay = function (param) {
         var _this = this;
         return this.getToken()

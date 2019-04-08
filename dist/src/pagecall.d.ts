@@ -44,6 +44,9 @@ export interface ReplayParam {
 export interface ReplayLegacyParam {
     noteFile: string;
 }
+export interface FinishParam {
+    roomId: string;
+}
 export interface ConnectWithResponse {
     html: string;
     roomId: string;
@@ -54,8 +57,50 @@ export interface ConnectInResponse {
     roomId: string;
     busy?: boolean;
 }
+export interface FinishResponse {
+    roomId: string;
+    roomInfo: object;
+}
 export interface ReplayResponse {
     html: string;
+}
+export interface OnGoingResponse {
+    roomInfo: {
+        id: string;
+        autoFinish: boolean;
+        appName: string;
+        startTime: string;
+        serviceId: string;
+        publicRoomId: string;
+        appVersion: string;
+        roomData: {
+            [key: string]: any;
+            layout: object;
+        };
+    };
+    userInfo: {
+        id: string;
+        serviceId: string;
+        createdAt: string;
+        roomId: string;
+        allowedTime: number;
+        userData: object;
+        connectedSessions: number;
+        finished: string;
+        log: {
+            raw: string[];
+            net: number[];
+            perSession: {
+                [sessionId: string]: number[];
+            };
+            errorSessions: string[];
+        };
+    }[];
+    sessionInfo: {
+        id: string;
+        serviceId: string;
+        userId: string;
+    }[];
 }
 export declare class PageCall {
     private param;
@@ -69,6 +114,8 @@ export declare class PageCall {
      */
     connectWith(param: ConnectWithParam): Promise<ConnectWithResponse>;
     connectIn(param: ConnectInParam): Promise<ConnectInResponse>;
+    finish(param: FinishParam): Promise<FinishResponse>;
+    onGoing(): Promise<OnGoingResponse>;
     replay(param: ReplayParam): Promise<ReplayResponse>;
     replayLegacy(param: ReplayLegacyParam): Promise<ReplayResponse>;
     private tokenValid;
