@@ -40,6 +40,7 @@ export interface ReplayParam {
     roomId: string;
     appName?: string;
     appVersion?: string;
+    options?: string;
 }
 export interface ReplayLegacyParam {
     noteFile: string;
