@@ -116,7 +116,7 @@ export declare class PageCall {
     connectWith(param: ConnectWithParam): Promise<ConnectWithResponse>;
     connectIn(param: ConnectInParam): Promise<ConnectInResponse>;
     finish(param: FinishParam): Promise<FinishResponse>;
-    onGoing(): Promise<OnGoingResponse>;
+    onGoing(): Promise<OnGoingResponse[]>;
     replay(param: ReplayParam): Promise<ReplayResponse>;
     replayLegacy(param: ReplayLegacyParam): Promise<ReplayResponse>;
     private tokenValid;
