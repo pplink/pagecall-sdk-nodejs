@@ -191,7 +191,7 @@ export class PageCall {
         return err;
       });
   }
-  onGoing(): Promise<OnGoingResponse> {
+  onGoing(): Promise<OnGoingResponse[]> {
     return this.getToken()
       .then(token => {
         return this.restPost(this.param.apiEndPoint + '/information/ongoing', {}, {'Authorization': `bearer ${token.token}`})
