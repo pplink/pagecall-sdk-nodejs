@@ -24,7 +24,7 @@ var PageCall = /** @class */ (function () {
                 res(_this.currentToken);
             }
             else { // need a new token
-                _this.restPost(_this.param.apiEndPoint + '/authentication/token', _this.keyPair)
+                _this.restPost(_this.param.apiEndPoint + "/authentication/token", _this.keyPair)
                     .then(function (data) {
                     _this.currentToken = data;
                     res(data);
@@ -44,7 +44,7 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + '/connection/with', param, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/with", param, { 'Authorization': "bearer " + token.token });
         })
             .then(function (data) {
             return data;
@@ -58,11 +58,11 @@ var PageCall = /** @class */ (function () {
         return this.getToken()
             .then(function (token) {
             var safeParam = __assign({}, param);
-            safeParam.allowedTime = param.allowedTime + ''; // stringify
+            safeParam.allowedTime = String(param.allowedTime);
             safeParam.userData = typeof param.userData === 'string' ? param.userData : JSON.stringify(param.userData);
             safeParam.roomData = typeof param.roomData === 'string' ? param.roomData : JSON.stringify(param.roomData);
             safeParam.template = typeof param.template === 'string' ? param.template : JSON.stringify(param.template);
-            return _this.restPost(_this.param.apiEndPoint + '/connection/in', safeParam, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/in", safeParam, { 'Authorization': "bearer " + token.token });
         })
             .then(function (data) {
             return data;
@@ -75,7 +75,7 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + '/connection/finish', param, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/finish", param, { 'Authorization': "bearer " + token.token });
         })
             .then(function (data) {
             return data;
@@ -88,7 +88,7 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + '/information/ongoing', {}, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/information/ongoing", {}, { 'Authorization': "bearer " + token.token });
         })
             .then(function (data) {
             return data;
@@ -101,7 +101,7 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + '/connection/replay', param, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/replay", param, { 'Authorization': "bearer " + token.token });
         })
             .then(function (data) {
             return data;
@@ -114,7 +114,7 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + '/connection/replay-legacy', param, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/replay-legacy", param, { 'Authorization': "bearer " + token.token });
         })
             .then(function (data) {
             return data;
@@ -124,7 +124,7 @@ var PageCall = /** @class */ (function () {
         });
     };
     PageCall.prototype.tokenValid = function () {
-        return this.currentToken && (this.currentToken.exp * 1000) - Date.now() > 60000; // safe padding 1 minutes;
+        return this.currentToken && (((this.currentToken.exp * 1000) - Date.now()) > 60000); // safe padding 1 minutes;
     };
     PageCall.prototype.restPost = function (url, data, headers) {
         if (headers === void 0) { headers = {}; }

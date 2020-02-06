@@ -131,7 +131,7 @@ export class PageCall {
       if (this.tokenValid()) {
         res(this.currentToken);
       } else { // need a new token
-        this.restPost(this.param.apiEndPoint + '/authentication/token', this.keyPair)
+        this.restPost(`${this.param.apiEndPoint}/authentication/token`, this.keyPair)
           .then(data => {
             this.currentToken = data;
             res(data);
@@ -151,7 +151,7 @@ export class PageCall {
   connectWith(param: ConnectWithParam): Promise<ConnectWithResponse> {
     return this.getToken()
       .then(token => {
-        return this.restPost(this.param.apiEndPoint + '/connection/with', param, {'Authorization': `bearer ${token.token}`})
+        return this.restPost(`${this.param.apiEndPoint}/connection/with`, param, {'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
@@ -165,11 +165,11 @@ export class PageCall {
     return this.getToken()
       .then(token => {
         const safeParam = {...param};
-        safeParam.allowedTime = param.allowedTime + ''; // stringify
+        safeParam.allowedTime = String(param.allowedTime);
         safeParam.userData = typeof param.userData === 'string' ? param.userData : JSON.stringify(param.userData);
         safeParam.roomData = typeof param.roomData === 'string' ? param.roomData : JSON.stringify(param.roomData);
         safeParam.template = typeof param.template === 'string' ? param.template : JSON.stringify(param.template);
-        return this.restPost(this.param.apiEndPoint + '/connection/in', safeParam, {'Authorization': `bearer ${token.token}`})
+        return this.restPost(`${this.param.apiEndPoint}/connection/in`, safeParam, {'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
@@ -182,7 +182,7 @@ export class PageCall {
   finish(param: FinishParam): Promise<FinishResponse> {
     return this.getToken()
       .then(token => {
-        return this.restPost(this.param.apiEndPoint + '/connection/finish', param, {'Authorization': `bearer ${token.token}`})
+        return this.restPost(`${this.param.apiEndPoint}/connection/finish`, param, {'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
@@ -194,7 +194,7 @@ export class PageCall {
   onGoing(): Promise<OnGoingResponse[]> {
     return this.getToken()
       .then(token => {
-        return this.restPost(this.param.apiEndPoint + '/information/ongoing', {}, {'Authorization': `bearer ${token.token}`})
+        return this.restPost(`${this.param.apiEndPoint}/information/ongoing`, {}, {'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
@@ -207,7 +207,7 @@ export class PageCall {
   replay(param: ReplayParam): Promise<ReplayResponse> {
     return this.getToken()
       .then(token => {
-        return this.restPost(this.param.apiEndPoint + '/connection/replay', param, {'Authorization': `bearer ${token.token}`})
+        return this.restPost(`${this.param.apiEndPoint}/connection/replay`, param, {'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
@@ -220,7 +220,7 @@ export class PageCall {
   replayLegacy(param: ReplayLegacyParam): Promise<ReplayResponse> {
     return this.getToken()
       .then(token => {
-        return this.restPost(this.param.apiEndPoint + '/connection/replay-legacy', param, {'Authorization': `bearer ${token.token}`})
+        return this.restPost(`${this.param.apiEndPoint}/connection/replay-legacy`, param, {'Authorization': `bearer ${token.token}`})
       })
       .then(data => {
         return data;
@@ -231,7 +231,7 @@ export class PageCall {
   }
 
   private tokenValid(): boolean {
-    return this.currentToken && (this.currentToken.exp * 1000) - Date.now() > 60000; // safe padding 1 minutes;
+    return this.currentToken && (((this.currentToken.exp * 1000) - Date.now()) > 60000); // safe padding 1 minutes;
   }
 
   private restPost(url, data, headers = {}): Promise<any> {
