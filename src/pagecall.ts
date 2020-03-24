@@ -47,7 +47,7 @@ export interface ReplayParam {
   roomId: string;
   appName?: string;
   appVersion?: string;
-  options?: string;
+  options?: string | object;
 }
 
 export interface ReplayLegacyParam {
