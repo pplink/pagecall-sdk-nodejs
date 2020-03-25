@@ -36,23 +36,6 @@ var PageCall = /** @class */ (function () {
             }
         });
     };
-    /**
-     * @Deprecated
-     * @param param
-     */
-    PageCall.prototype.connectWith = function (param) {
-        var _this = this;
-        return this.getToken()
-            .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + "/connection/with", param, { 'Authorization': "bearer " + token.token });
-        })
-            .then(function (data) {
-            return data;
-        })
-            .catch(function (err) {
-            return err;
-        });
-    };
     PageCall.prototype.connectIn = function (param) {
         var _this = this;
         return this.getToken()
@@ -62,7 +45,10 @@ var PageCall = /** @class */ (function () {
             safeParam.userData = typeof param.userData === 'string' ? param.userData : JSON.stringify(param.userData);
             safeParam.roomData = typeof param.roomData === 'string' ? param.roomData : JSON.stringify(param.roomData);
             safeParam.template = typeof param.template === 'string' ? param.template : JSON.stringify(param.template);
-            return _this.restPost(_this.param.apiEndPoint + "/connection/in", safeParam, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/in", JSON.stringify(safeParam), {
+                'Authorization': "bearer " + token.token,
+                'Content-Type': 'application/json'
+            });
         })
             .then(function (data) {
             return data;
@@ -75,7 +61,10 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + "/connection/finish", param, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/finish", JSON.stringify(param), {
+                'Authorization': "bearer " + token.token,
+                'Content-Type': 'application/json'
+            });
         })
             .then(function (data) {
             return data;
@@ -88,7 +77,10 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + "/information/ongoing", {}, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/information/ongoing", {}, {
+                'Authorization': "bearer " + token.token,
+                'Content-Type': 'application/json'
+            });
         })
             .then(function (data) {
             return data;
@@ -101,7 +93,10 @@ var PageCall = /** @class */ (function () {
         var _this = this;
         return this.getToken()
             .then(function (token) {
-            return _this.restPost(_this.param.apiEndPoint + "/connection/replay", param, { 'Authorization': "bearer " + token.token });
+            return _this.restPost(_this.param.apiEndPoint + "/connection/replay", JSON.stringify(param), {
+                'Authorization': "bearer " + token.token,
+                'Content-Type': 'application/json'
+            });
         })
             .then(function (data) {
             return data;

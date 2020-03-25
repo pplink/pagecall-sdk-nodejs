@@ -109,11 +109,6 @@ export declare class PageCall {
     keyPair: ApiKeyPair;
     constructor(param: PageCallParam);
     getToken(): Promise<Token>;
-    /**
-     * @Deprecated
-     * @param param
-     */
-    connectWith(param: ConnectWithParam): Promise<ConnectWithResponse>;
     connectIn(param: ConnectInParam): Promise<ConnectInResponse>;
     finish(param: FinishParam): Promise<FinishResponse>;
     onGoing(): Promise<OnGoingResponse[]>;
