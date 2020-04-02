@@ -89,6 +89,38 @@ var PageCall = /** @class */ (function () {
             return err;
         });
     };
+    PageCall.prototype.getRoom = function (roomId) {
+        var _this = this;
+        return this.getToken()
+            .then(function (token) {
+            return _this.restPost(_this.param.apiEndPoint + "/information/room", JSON.stringify({ roomId: roomId }), {
+                'Authorization': "bearer " + token.token,
+                'Content-Type': 'application/json'
+            });
+        })
+            .then(function (data) {
+            return data;
+        })
+            .catch(function (err) {
+            return err;
+        });
+    };
+    PageCall.prototype.getRoomIds = function () {
+        var _this = this;
+        return this.getToken()
+            .then(function (token) {
+            return _this.restPost(_this.param.apiEndPoint + "/information/rooms", {}, {
+                'Authorization': "bearer " + token.token,
+                'Content-Type': 'application/json'
+            });
+        })
+            .then(function (data) {
+            return data;
+        })
+            .catch(function (err) {
+            return err;
+        });
+    };
     PageCall.prototype.replay = function (param) {
         var _this = this;
         return this.getToken()

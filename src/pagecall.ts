@@ -116,6 +116,7 @@ export interface OnGoingResponse {
     serviceId: string;
     userId: string;
   }[];
+  integratedTime?: number;
 }
 
 export class PageCall {
@@ -195,7 +196,36 @@ export class PageCall {
         return err;
       });
   }
-
+  getRoom(roomId: string): Promise<Partial<OnGoingResponse>> {
+    return this.getToken()
+      .then(token => {
+        return this.restPost(`${this.param.apiEndPoint}/information/room`, JSON.stringify({roomId}), {
+          'Authorization': `bearer ${token.token}`,
+          'Content-Type': 'application/json'
+        });
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        return err;
+      });
+  }
+  getRoomIds(): Promise<string[]> {
+    return this.getToken()
+      .then(token => {
+        return this.restPost(`${this.param.apiEndPoint}/information/rooms`, {}, {
+          'Authorization': `bearer ${token.token}`,
+          'Content-Type': 'application/json'
+        });
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        return err;
+      });
+  }
   replay(param: ReplayParam): Promise<ReplayResponse> {
     return this.getToken()
       .then(token => {

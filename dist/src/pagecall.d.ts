@@ -102,6 +102,7 @@ export interface OnGoingResponse {
         serviceId: string;
         userId: string;
     }[];
+    integratedTime?: number;
 }
 export declare class PageCall {
     private param;
@@ -112,6 +113,8 @@ export declare class PageCall {
     connectIn(param: ConnectInParam): Promise<ConnectInResponse>;
     finish(param: FinishParam): Promise<FinishResponse>;
     onGoing(): Promise<OnGoingResponse[]>;
+    getRoom(roomId: string): Promise<Partial<OnGoingResponse>>;
+    getRoomIds(): Promise<string[]>;
     replay(param: ReplayParam): Promise<ReplayResponse>;
     replayLegacy(param: ReplayLegacyParam): Promise<ReplayResponse>;
     private tokenValid;
