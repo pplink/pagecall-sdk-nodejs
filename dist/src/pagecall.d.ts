@@ -34,6 +34,7 @@ export interface ConnectInParam {
     appName?: string;
     appVersion?: string;
     templateName?: string;
+    mediaAPIEndpoint?: string;
     autoFinish?: 'true' | 'false';
 }
 export interface ReplayParam {
