@@ -197,6 +197,25 @@ export class PageCall {
         return err;
       });
   }
+  getWebhookData(roomId: string): Promise<Partial<OnGoingResponse>> {
+    return this.getToken()
+      .then(token => {
+        return this.restPost(
+          `${this.param.apiEndPoint}/information/webhook-data`,
+          JSON.stringify({roomId}),
+          {
+            'Authorization': `bearer ${token.token}`,
+            'Content-Type': 'application/json'
+          }
+        );
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        return err;
+      });
+  }
   getRoom(roomId: string): Promise<Partial<OnGoingResponse>> {
     return this.getToken()
       .then(token => {

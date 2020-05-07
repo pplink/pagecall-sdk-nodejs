@@ -114,6 +114,7 @@ export declare class PageCall {
     connectIn(param: ConnectInParam): Promise<ConnectInResponse>;
     finish(param: FinishParam): Promise<FinishResponse>;
     onGoing(): Promise<OnGoingResponse[]>;
+    getWebhookData(roomId: string): Promise<Partial<OnGoingResponse>>;
     getRoom(roomId: string): Promise<Partial<OnGoingResponse>>;
     getRoomIds(): Promise<string[]>;
     replay(param: ReplayParam): Promise<ReplayResponse>;
