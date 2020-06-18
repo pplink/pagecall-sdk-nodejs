@@ -232,6 +232,24 @@ export class PageCall {
         return err;
       });
   }
+  getRoomByPublicId(publicRoomId: string): Promise<Partial<OnGoingResponse>> {
+    return this.getToken()
+      .then(token => {
+        return this.restPost(
+          `${this.param.apiEndPoint}/information/room`,
+          JSON.stringify({publicRoomId}),
+          {
+            'Authorization': `bearer ${token.token}`,
+            'Content-Type': 'application/json'
+          });
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        return err;
+      });
+  }
   getRoomIds(): Promise<string[]> {
     return this.getToken()
       .then(token => {

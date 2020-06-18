@@ -117,6 +117,7 @@ export declare class PageCall {
     onGoing(): Promise<OnGoingResponse[]>;
     getWebhookData(roomId: string): Promise<Partial<OnGoingResponse>>;
     getRoom(roomId: string): Promise<Partial<OnGoingResponse>>;
+    getRoomByPublicId(publicRoomId: string): Promise<Partial<OnGoingResponse>>;
     getRoomIds(): Promise<string[]>;
     replay(param: ReplayParam): Promise<ReplayResponse>;
     replayLegacy(param: ReplayLegacyParam): Promise<ReplayResponse>;
