@@ -121,6 +121,22 @@ var PageCall = /** @class */ (function () {
             return err;
         });
     };
+    PageCall.prototype.getUser = function (userId) {
+        var _this = this;
+        return this.getToken()
+            .then(function (token) {
+            return _this.restPost(_this.param.apiEndPoint + "/information/user", JSON.stringify({ userId: userId }), {
+                'Authorization': "bearer " + token.token,
+                'Content-Type': 'application/json'
+            });
+        })
+            .then(function (data) {
+            return data;
+        })
+            .catch(function (err) {
+            return err;
+        });
+    };
     PageCall.prototype.getRoomByPublicId = function (publicRoomId) {
         var _this = this;
         return this.getToken()

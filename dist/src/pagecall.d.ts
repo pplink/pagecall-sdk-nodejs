@@ -11,6 +11,15 @@ export interface Token {
     token: string;
     exp: number;
 }
+export interface User {
+    id: string;
+    createdAt: string;
+    roomId: string;
+    allowedTime: string;
+    userData: string;
+    connectedSessions: string;
+    finishd: string;
+}
 /**
  * @Deprecated
  */
@@ -117,6 +126,7 @@ export declare class PageCall {
     onGoing(): Promise<OnGoingResponse[]>;
     getWebhookData(roomId: string): Promise<Partial<OnGoingResponse>>;
     getRoom(roomId: string): Promise<Partial<OnGoingResponse>>;
+    getUser(userId: string): Promise<User>;
     getRoomByPublicId(publicRoomId: string): Promise<Partial<OnGoingResponse>>;
     getRoomIds(): Promise<string[]>;
     replay(param: ReplayParam): Promise<ReplayResponse>;

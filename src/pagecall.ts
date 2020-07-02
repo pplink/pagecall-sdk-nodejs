@@ -15,6 +15,15 @@ export interface Token {
   token: string;
   exp: number;
 }
+export interface User {
+  id: string;
+  createdAt: string;
+  roomId: string;
+  allowedTime: string;
+  userData: string;
+  connectedSessions: string;
+  finishd: string;
+}
 
 /**
  * @Deprecated
@@ -221,6 +230,21 @@ export class PageCall {
     return this.getToken()
       .then(token => {
         return this.restPost(`${this.param.apiEndPoint}/information/room`, JSON.stringify({roomId}), {
+          'Authorization': `bearer ${token.token}`,
+          'Content-Type': 'application/json'
+        });
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        return err;
+      });
+  }
+  getUser(userId: string): Promise<User> {
+    return this.getToken()
+      .then(token => {
+        return this.restPost(`${this.param.apiEndPoint}/information/user`, JSON.stringify({userId}), {
           'Authorization': `bearer ${token.token}`,
           'Content-Type': 'application/json'
         });
