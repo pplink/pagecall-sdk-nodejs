@@ -103,18 +103,14 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.getRooms = function (offset, limit, desc, name) {
+    PageCallNew.prototype.getRooms = function (offset, limit, desc, query) {
+        if (query === void 0) { query = {}; }
         return __awaiter(this, void 0, void 0, function () {
             var response;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.get('/rooms', {
-                            offset: offset.toString(),
-                            limit: limit.toString(),
-                            sort_by: desc ? '-created_at' : '+created_at',
-                            name: name
-                        })];
+                    case 0: return [4 /*yield*/, this.get('/rooms', __assign(__assign({}, query), { offset: offset.toString(), limit: limit.toString(), sort_by: desc ? '-created_at' : '+created_at' }))];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response.rooms

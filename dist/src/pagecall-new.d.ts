@@ -64,7 +64,7 @@ export declare class PageCallNew {
     constructor(param: PageCallNewParam);
     createPublicRoom(name: string): Promise<Room>;
     getRoom(roomId: string): Promise<Room>;
-    getRooms(offset: number, limit: number, desc: boolean, name?: string): Promise<Room[]>;
+    getRooms(offset: number, limit: number, desc: boolean, query?: object): Promise<Room[]>;
     terminateRoom(roomId: string): Promise<Room>;
     replayRoom(roomId: string, userId: string): Promise<JoinRoomResult>;
     createUser(userId: string, name: string, metadata?: object): Promise<NewUser>;
