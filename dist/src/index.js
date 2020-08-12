@@ -4,4 +4,6 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./pagecall"));
+__export(require("./pagecall-legacy"));
+__export(require("./pagecall-new"));
 //# sourceMappingURL=index.js.map

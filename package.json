@@ -26,8 +26,13 @@
   },
   "dependencies": {
     "@types/restler": "^3.1.5",
+    "axios": "^0.19.2",
+    "change-case": "^4.1.1",
     "restler": "^3.4.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0"
   }
 }
