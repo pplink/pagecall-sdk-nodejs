@@ -103,7 +103,7 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.getRooms = function (offset, limit, desc) {
+    PageCallNew.prototype.getRooms = function (offset, limit, desc, name) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             var _this = this;
@@ -112,7 +112,8 @@ var PageCallNew = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.get('/rooms', {
                             offset: offset.toString(),
                             limit: limit.toString(),
-                            sort_by: desc ? '-created_at' : '+created_at'
+                            sort_by: desc ? '-created_at' : '+created_at',
+                            name: name
                         })];
                     case 1:
                         response = _a.sent();

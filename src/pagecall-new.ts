@@ -91,11 +91,12 @@ export class PageCallNew {
     const response = await this.get<{room: object}>(`/rooms/${roomId}`);
     return this.convertObjectToCamelCase(response.room) as Room;
   }
-  async getRooms(offset: number, limit: number, desc: boolean): Promise<Room[]> {
+  async getRooms(offset: number, limit: number, desc: boolean, name?: string): Promise<Room[]> {
     const response = await this.get<{rooms: object[]}>('/rooms', {
       offset: offset.toString(),
       limit: limit.toString(),
-      sort_by: desc ? '-created_at' : '+created_at'
+      sort_by: desc ? '-created_at' : '+created_at',
+      name
     });
     return response.rooms
       .map(room => this.convertObjectToCamelCase(room) as Room);
