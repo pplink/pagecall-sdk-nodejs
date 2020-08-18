@@ -163,7 +163,7 @@ var PageCallNew = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.post("/users/" + userId, {})];
+                    case 0: return [4 /*yield*/, this.get("/users/" + userId, {})];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, this.convertObjectToCamelCase(response.user)];
