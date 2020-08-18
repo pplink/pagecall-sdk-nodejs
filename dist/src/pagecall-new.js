@@ -166,7 +166,6 @@ var PageCallNew = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.get("/users/" + userId)];
                     case 1:
                         response = _a.sent();
-                        console.log('[pagecall] user', response.user);
                         return [2 /*return*/, this.convertObjectToCamelCase(response.user)];
                 }
             });
