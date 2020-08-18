@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { camelCase } from 'change-case';
 const config = {
   defaultApiEndpoint: 'https://api.pagecall.net/v1',
@@ -194,18 +194,24 @@ export class PageCallNew {
       .reduce((prev, curr) => ({ ...prev, [camelCase(curr)]: obj[curr]}), {});
   }
   private async post<T>(path: string, body: object): Promise<T> {
-    return this.axiosInstance.post<any, T>(path, JSON.stringify(body)).catch(err => {
-      return err.response.data;
-    });
+    return this.axiosInstance.post<any, AxiosResponse<T>>(path, JSON.stringify(body))
+      .then(response => response.data)
+      .catch(err => {
+        return err.response.data;
+      });
   }
   private async get<T>(path: string, queryParams?: Record<string, string>): Promise<T> {
-    return this.axiosInstance.get(path, {params: queryParams}).catch(err => {
-      return err.response.data;
-    });
+    return this.axiosInstance.get<any, AxiosResponse<T>>(path, {params: queryParams})
+      .then(response => response.data)
+      .catch(err => {
+        return err.response.data;
+      });
   }
   private async put<T>(path: string, body: object): Promise<T> {
-    return this.axiosInstance.put<any, T>(path, JSON.stringify(body)).catch(err => {
-      return err.response.data;
-    });
+    return this.axiosInstance.put<any, AxiosResponse<T>>(path, JSON.stringify(body))
+      .then(response => response.data)
+      .catch(err => {
+        return err.response.data;
+      });
   }
 }

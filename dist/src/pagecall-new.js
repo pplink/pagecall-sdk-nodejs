@@ -261,7 +261,9 @@ var PageCallNew = /** @class */ (function () {
     PageCallNew.prototype.post = function (path, body) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.axiosInstance.post(path, JSON.stringify(body)).catch(function (err) {
+                return [2 /*return*/, this.axiosInstance.post(path, JSON.stringify(body))
+                        .then(function (response) { return response.data; })
+                        .catch(function (err) {
                         return err.response.data;
                     })];
             });
@@ -270,7 +272,9 @@ var PageCallNew = /** @class */ (function () {
     PageCallNew.prototype.get = function (path, queryParams) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.axiosInstance.get(path, { params: queryParams }).catch(function (err) {
+                return [2 /*return*/, this.axiosInstance.get(path, { params: queryParams })
+                        .then(function (response) { return response.data; })
+                        .catch(function (err) {
                         return err.response.data;
                     })];
             });
@@ -279,7 +283,9 @@ var PageCallNew = /** @class */ (function () {
     PageCallNew.prototype.put = function (path, body) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.axiosInstance.put(path, JSON.stringify(body)).catch(function (err) {
+                return [2 /*return*/, this.axiosInstance.put(path, JSON.stringify(body))
+                        .then(function (response) { return response.data; })
+                        .catch(function (err) {
                         return err.response.data;
                     })];
             });
