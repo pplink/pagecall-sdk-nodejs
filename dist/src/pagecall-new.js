@@ -245,7 +245,7 @@ var PageCallNew = /** @class */ (function () {
     };
     PageCallNew.prototype.injectGlobalVariablesToHtml = function (html, variables) {
         var script = Object.keys(variables)
-            .reduce(function (prev, curr) { return prev + ("const " + curr + " = \"" + variables[curr] + "\";\n"); }, '');
+            .reduce(function (prev, curr) { return prev + ("window." + curr + " = \"" + variables[curr] + "\";\n"); }, '');
         return html.replace('<head>', "<head>\n<script>\n" + script + "</script>\n");
     };
     PageCallNew.prototype.convertObjectToCamelCase = function (obj) {

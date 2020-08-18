@@ -181,7 +181,7 @@ export class PageCallNew {
     html: string,
     variables: {[key: string]: string}): string {
       const script = Object.keys(variables)
-        .reduce((prev, curr) => prev + `const ${curr} = "${variables[curr]}";\n`, '');
+        .reduce((prev, curr) => prev + `window.${curr} = "${variables[curr]}";\n`, '');
       return html.replace('<head>', `<head>\n<script>\n${script}</script>\n`);
   }
   private convertObjectToCamelCase<T>(obj: object): object {
