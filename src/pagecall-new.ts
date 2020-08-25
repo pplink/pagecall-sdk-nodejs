@@ -124,7 +124,7 @@ export class PageCallNew {
     return this.convertObjectToCamelCase(response.user) as NewUser;
   }
   async getUser(userId: string): Promise<NewUser> {
-    const response = await this.get<{user: object}>(`/users/${userId}`);
+    const response = await this.get<{user: object}>(`/users/${encodeURI(userId)}`);
     return this.convertObjectToCamelCase(response.user) as NewUser;
   }
   async getUsers(offset: number, limit: number, desc: boolean): Promise<NewUser[]> {
