@@ -70,8 +70,8 @@ export declare class PageCallNew {
     createUser(userId: string, name: string, metadata?: object): Promise<NewUser>;
     getUser(userId: string): Promise<NewUser>;
     getUsers(offset: number, limit: number, desc: boolean): Promise<NewUser[]>;
-    createMember(roomId: string, userId: string, layout?: string, options?: object): Promise<Member>;
-    joinRoom(roomId: string, userId: string, layout?: string, options?: object): Promise<JoinRoomResult>;
+    createMember(roomId: string, userId: string, layoutId?: string, options?: object): Promise<Member>;
+    joinRoom(roomId: string, userId: string, layoutId?: string, options?: object): Promise<JoinRoomResult>;
     private getHtml;
     private injectAuthKeysToHtml;
     private injectGlobalVariablesToHtml;

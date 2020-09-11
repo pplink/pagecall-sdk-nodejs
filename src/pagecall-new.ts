@@ -140,12 +140,12 @@ export class PageCallNew {
   async createMember(
     roomId: string,
     userId: string,
-    layout?: string,
+    layoutId?: string,
     options?: object
   ): Promise<Member> {
     const response = await this.post<{member: object}>(`/rooms/${roomId}/members`, {
       user_id: userId,
-      layout,
+      layout_id: layoutId,
       options
     });
     return this.convertObjectToCamelCase(response.member) as Member;
@@ -153,11 +153,11 @@ export class PageCallNew {
   async joinRoom(
     roomId: string,
     userId: string,
-    layout?: string,
+    layoutId?: string,
     options?: object
   ): Promise<JoinRoomResult> {
     const user = await this.getUser(userId);
-    const member = await this.createMember(roomId, userId, layout, options);
+    const member = await this.createMember(roomId, userId, layoutId, options);
     const html = await this.getHtml();
     const { accessToken } = user;
     return {
