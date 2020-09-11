@@ -80,10 +80,11 @@ export class PageCallNew {
       }
     });
   }
-  async createPublicRoom(name: string): Promise<Room> {
+  async createPublicRoom(name: string, layoutId: string): Promise<Room> {
     const response = await this.post<{room: object}>('/rooms', {
       type: RoomType.Public,
-      name
+      name,
+      layout_id: layoutId
     });
     return this.convertObjectToCamelCase(response.room) as Room;
   }
