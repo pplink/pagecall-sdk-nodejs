@@ -62,7 +62,7 @@ export declare class PageCallNew {
     readonly apiToken: string;
     private axiosInstance;
     constructor(param: PageCallNewParam);
-    createPublicRoom(name: string): Promise<Room>;
+    createPublicRoom(name: string, layoutId: string): Promise<Room>;
     getRoom(roomId: string): Promise<Room>;
     getRooms(offset: number, limit: number, desc: boolean, query?: object): Promise<Room[]>;
     terminateRoom(roomId: string): Promise<Room>;

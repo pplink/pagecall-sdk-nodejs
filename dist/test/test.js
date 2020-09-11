@@ -4,7 +4,7 @@ var pagecall_new_1 = require("../src/pagecall-new");
 var newPagecall = new pagecall_new_1.PageCallNew({
     apiToken: ''
 });
-newPagecall.createPublicRoom('')
+newPagecall.createPublicRoom('', '')
     .then(function (room) {
     return newPagecall.createUser('', '')
         .then(function (user) {
