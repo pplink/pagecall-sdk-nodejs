@@ -145,7 +145,7 @@ export class PageCallNew {
   ): Promise<Member> {
     const response = await this.post<{member: object}>(`/rooms/${roomId}/members`, {
       user_id: userId,
-      layout_id: layoutId,
+      layout_id: layoutId || undefined,
       options
     });
     return this.convertObjectToCamelCase(response.member) as Member;

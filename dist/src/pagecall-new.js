@@ -198,7 +198,7 @@ var PageCallNew = /** @class */ (function () {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.post("/rooms/" + roomId + "/members", {
                             user_id: userId,
-                            layout_id: layoutId,
+                            layout_id: layoutId || undefined,
                             options: options
                         })];
                     case 1:
