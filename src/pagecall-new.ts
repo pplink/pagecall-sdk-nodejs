@@ -161,7 +161,7 @@ export class PageCallNew {
     const html = await this.getHtml();
     const { accessToken } = user;
     return {
-      html: this.injectAuthKeysToHtml(html, roomId, accessToken),
+      html: this.injectAuthKeysToHtml(html, roomId, accessToken, 'meet'),
       roomId
     };
   }
@@ -171,11 +171,13 @@ export class PageCallNew {
   private injectAuthKeysToHtml(
     html: string,
     roomId: string,
-    accessToken: string
+    accessToken: string,
+    mode: 'meet' | 'replay'
   ): string {
     return this.injectGlobalVariablesToHtml(html, {
       room_id: roomId,
-      access_token: accessToken
+      access_token: accessToken,
+      mode
     });
   }
   private injectGlobalVariablesToHtml(

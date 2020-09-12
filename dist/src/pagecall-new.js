@@ -224,7 +224,7 @@ var PageCallNew = /** @class */ (function () {
                         html = _a.sent();
                         accessToken = user.accessToken;
                         return [2 /*return*/, {
-                                html: this.injectAuthKeysToHtml(html, roomId, accessToken),
+                                html: this.injectAuthKeysToHtml(html, roomId, accessToken, 'meet'),
                                 roomId: roomId
                             }];
                 }
@@ -238,10 +238,11 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.injectAuthKeysToHtml = function (html, roomId, accessToken) {
+    PageCallNew.prototype.injectAuthKeysToHtml = function (html, roomId, accessToken, mode) {
         return this.injectGlobalVariablesToHtml(html, {
             room_id: roomId,
-            access_token: accessToken
+            access_token: accessToken,
+            mode: mode
         });
     };
     PageCallNew.prototype.injectGlobalVariablesToHtml = function (html, variables) {
