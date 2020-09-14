@@ -113,9 +113,6 @@ export class PageCallNew {
     });
     return this.convertObjectToCamelCase(response.room) as Room;
   }
-  async replayRoom(roomId: string, userId: string): Promise<JoinRoomResult> {
-    return this.joinRoom(roomId, userId);
-  }
   async createUser(userId: string, name: string, metadata?: object): Promise<NewUser> {
     const response = await this.post<{user: object}>('/users', {
       name,
@@ -162,6 +159,15 @@ export class PageCallNew {
     const { accessToken } = user;
     return {
       html: this.injectAuthKeysToHtml(html, roomId, accessToken, 'meet'),
+      roomId
+    };
+  }
+  async replayRoom(
+    roomId: string
+  ): Promise<JoinRoomResult> {
+    const html = await this.getHtml();
+    return {
+      html: this.injectAuthKeysToHtml(html, roomId, '', 'replay'),
       roomId
     };
   }

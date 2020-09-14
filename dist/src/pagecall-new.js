@@ -135,13 +135,6 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.replayRoom = function (roomId, userId) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/, this.joinRoom(roomId, userId)];
-            });
-        });
-    };
     PageCallNew.prototype.createUser = function (userId, name, metadata) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
@@ -225,6 +218,22 @@ var PageCallNew = /** @class */ (function () {
                         accessToken = user.accessToken;
                         return [2 /*return*/, {
                                 html: this.injectAuthKeysToHtml(html, roomId, accessToken, 'meet'),
+                                roomId: roomId
+                            }];
+                }
+            });
+        });
+    };
+    PageCallNew.prototype.replayRoom = function (roomId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var html;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getHtml()];
+                    case 1:
+                        html = _a.sent();
+                        return [2 /*return*/, {
+                                html: this.injectAuthKeysToHtml(html, roomId, '', 'replay'),
                                 roomId: roomId
                             }];
                 }
