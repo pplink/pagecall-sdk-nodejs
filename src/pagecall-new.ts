@@ -163,11 +163,14 @@ export class PageCallNew {
     };
   }
   async replayRoom(
-    roomId: string
+    roomId: string,
+    userId?: string
   ): Promise<JoinRoomResult> {
     const html = await this.getHtml();
+    const user = userId ? await this.getUser(userId) : { accessToken: ''};
+    const { accessToken } = user;
     return {
-      html: this.injectAuthKeysToHtml(html, roomId, '', 'replay'),
+      html: this.injectAuthKeysToHtml(html, roomId, accessToken, 'replay'),
       roomId
     };
   }
