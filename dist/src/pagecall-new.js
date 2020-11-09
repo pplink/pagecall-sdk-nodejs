@@ -224,16 +224,27 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.replayRoom = function (roomId) {
+    PageCallNew.prototype.replayRoom = function (roomId, userId) {
         return __awaiter(this, void 0, void 0, function () {
-            var html;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var html, user, _a, accessToken;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0: return [4 /*yield*/, this.getHtml()];
                     case 1:
-                        html = _a.sent();
+                        html = _b.sent();
+                        if (!userId) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.getUser(userId)];
+                    case 2:
+                        _a = _b.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        _a = { accessToken: '' };
+                        _b.label = 4;
+                    case 4:
+                        user = _a;
+                        accessToken = user.accessToken;
                         return [2 /*return*/, {
-                                html: this.injectAuthKeysToHtml(html, roomId, '', 'replay'),
+                                html: this.injectAuthKeysToHtml(html, roomId, accessToken, 'replay'),
                                 roomId: roomId
                             }];
                 }
