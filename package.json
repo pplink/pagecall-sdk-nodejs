@@ -29,6 +29,7 @@
     "axios": "^0.21.1",
     "change-case": "^4.1.1",
     "restler": "^3.4.0",
+    "time-overlap": "^2.1.1",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
   },

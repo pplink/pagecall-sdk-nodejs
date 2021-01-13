@@ -46,9 +46,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = require("axios");
 var change_case_1 = require("change-case");
+var time_overlap_1 = require("time-overlap");
 var config = {
     defaultApiEndpoint: 'https://api.pagecall.net/v1',
     defaultAppEndpoint: 'https://app.pagecall.net'
@@ -100,6 +108,20 @@ var PageCallNew = /** @class */ (function () {
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, this.convertObjectToCamelCase(response.room)];
+                }
+            });
+        });
+    };
+    PageCallNew.prototype.getSessions = function (roomId, query) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.get("/rooms/" + roomId + "/sessions", query)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, response.sessions.map(function (session) { return _this.convertObjectToCamelCase(session); })];
                 }
             });
         });
@@ -251,6 +273,30 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
+    PageCallNew.prototype.postActionToSessions = function (sessionIds, type, payload) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.post('/post_action_to_sessions', {
+                        type: type,
+                        payload: payload,
+                        session_ids: sessionIds
+                    })];
+            });
+        });
+    };
+    PageCallNew.prototype.getIntegratedTime = function (roomId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = this.getIntegratedTimeFromSessions;
+                        return [4 /*yield*/, this.getSessions(roomId)];
+                    case 1: return [2 /*return*/, _a.apply(this, [_b.sent()])];
+                }
+            });
+        });
+    };
     PageCallNew.prototype.getHtml = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -264,6 +310,28 @@ var PageCallNew = /** @class */ (function () {
             access_token: accessToken,
             mode: mode
         });
+    };
+    PageCallNew.prototype.getIntegratedTimeFromSessions = function (sessions) {
+        var timestamps = sessions.map(function (session) { return ({
+            memberId: session.memberId,
+            connectedAt: new Date(session.connectedAt).getTime(),
+            disconnectedAt: session.disconnectedAt
+                ? new Date(session.disconnectedAt).getTime()
+                : Date.now()
+        }); }).reduce(function (_a, curr) {
+            var timestamps = _a.timestamps, memberIds = _a.memberIds;
+            var nextState = { timestamps: __spreadArrays(timestamps), memberIds: __spreadArrays(memberIds) };
+            var memberIndex = memberIds.indexOf(curr.memberId);
+            if (memberIndex >= 0) {
+                nextState.timestamps[memberIndex] = __spreadArrays(timestamps[memberIndex], [curr.connectedAt, curr.disconnectedAt]);
+            }
+            else {
+                nextState.memberIds.push(curr.memberId);
+                nextState.timestamps.push([curr.connectedAt, curr.disconnectedAt]);
+            }
+            return nextState;
+        }, { timestamps: [], memberIds: [] }).timestamps;
+        return time_overlap_1.integrate(time_overlap_1.cross([0, Date.now()], time_overlap_1.overlap(timestamps)));
     };
     PageCallNew.prototype.injectGlobalVariablesToHtml = function (html, variables) {
         var script = Object.keys(variables)

@@ -1,14 +1,24 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { camelCase } from 'change-case';
+import { integrate, cross, crossAll, overlap } from 'time-overlap';
 const config = {
   defaultApiEndpoint: 'https://api.pagecall.net/v1',
   defaultAppEndpoint: 'https://app.pagecall.net'
 }
 export interface Session {
+  id: string;
+  subscribedCanvasTime: number;
+  subscribedMediaSize: number;
   connectionId: string;
   connectedAt: string;
   disconnectedAt: string;
   elapsedTime: number;
+  memberId: string;
+  userId: string;
+  roomId: string;
+  organizationId: string;
+  ipAddress: string;
+  userAgent: string;
 }
 export interface Member {
   id: string;
@@ -61,6 +71,14 @@ export interface JoinRoomResult {
   html: string;
   roomId: string;
 }
+export interface Limiter {
+  offset?: string;
+  limit?: string;
+  desc?: '-created_at' | '+created_at'
+}
+export interface SessionQuery {
+  is_connecting?: 'true';
+}
 export class PageCallNew {
   readonly apiEndpoint: string;
   readonly appEndpoint: string;
@@ -91,6 +109,10 @@ export class PageCallNew {
   async getRoom(roomId: string): Promise<Room> {
     const response = await this.get<{room: object}>(`/rooms/${roomId}`);
     return this.convertObjectToCamelCase(response.room) as Room;
+  }
+  async getSessions(roomId: string, query?: Limiter | SessionQuery): Promise<Session[]> {
+    const response = await this.get<{sessions: Session[]}>(`/rooms/${roomId}/sessions`, query);
+    return response.sessions.map(session => this.convertObjectToCamelCase(session)) as Session[];
   }
   async getRooms(
     offset: number,
@@ -174,6 +196,16 @@ export class PageCallNew {
       roomId
     };
   }
+  async postActionToSessions(sessionIds: string[], type: string, payload: object): Promise<{ok: boolean}> {
+    return this.post<{ok: boolean}>('/post_action_to_sessions', {
+      type,
+      payload,
+      session_ids: sessionIds
+    });
+  }
+  async getIntegratedTime(roomId: string): Promise<number> {
+    return this.getIntegratedTimeFromSessions(await this.getSessions(roomId));
+  }
   private async getHtml(): Promise<string> {
     return axios.get(config.defaultAppEndpoint).then(result => result.data);
   }
@@ -189,6 +221,29 @@ export class PageCallNew {
       mode
     });
   }
+  private getIntegratedTimeFromSessions(sessions: Session[]): number {
+    const timestamps = sessions.map(session => ({
+      memberId: session.memberId,
+      connectedAt: new Date(session.connectedAt).getTime(),
+      disconnectedAt: session.disconnectedAt
+      ? new Date(session.disconnectedAt).getTime()
+      : Date.now()
+    })).reduce(({ timestamps, memberIds }, curr) => {
+      const nextState = { timestamps: [...timestamps], memberIds: [...memberIds]};
+      const memberIndex = memberIds.indexOf(curr.memberId);
+      if (memberIndex >= 0) {
+        nextState.timestamps[memberIndex] = [...timestamps[memberIndex], curr.connectedAt, curr.disconnectedAt];
+      } else {
+        nextState.memberIds.push(curr.memberId);
+        nextState.timestamps.push([curr.connectedAt, curr.disconnectedAt]);
+      }
+      return nextState;
+    }, { timestamps: [], memberIds: []}).timestamps;
+
+    return integrate(
+      cross([0, Date.now()], overlap(timestamps))
+    );
+  }
   private injectGlobalVariablesToHtml(
     html: string,
     variables: {[key: string]: string}): string {
@@ -203,21 +258,24 @@ export class PageCallNew {
     return Object.keys(obj)
       .reduce((prev, curr) => ({ ...prev, [camelCase(curr)]: obj[curr]}), {});
   }
-  private async post<T>(path: string, body: object): Promise<T> {
+  public async post<T>(path: string, body: object): Promise<T> {
     return this.axiosInstance.post<any, AxiosResponse<T>>(path, JSON.stringify(body))
       .then(response => response.data)
       .catch(err => {
         return err.response.data;
       });
   }
-  private async get<T>(path: string, queryParams?: Record<string, string>): Promise<T> {
+  public async get<T>(
+    path: string,
+    queryParams?: Record<string, string> | Limiter | SessionQuery
+  ): Promise<T> {
     return this.axiosInstance.get<any, AxiosResponse<T>>(path, {params: queryParams})
       .then(response => response.data)
       .catch(err => {
         return err.response.data;
       });
   }
-  private async put<T>(path: string, body: object): Promise<T> {
+  public async put<T>(path: string, body: object): Promise<T> {
     return this.axiosInstance.put<any, AxiosResponse<T>>(path, JSON.stringify(body))
       .then(response => response.data)
       .catch(err => {
