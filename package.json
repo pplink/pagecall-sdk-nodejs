@@ -1,6 +1,6 @@
 {
   "name": "pagecall",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "pagecall sdk for NodeJS developers",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
