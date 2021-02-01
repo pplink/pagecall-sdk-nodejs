@@ -112,16 +112,53 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.getSessions = function (roomId, query) {
+    PageCallNew.prototype.getSessions = function (roomId, query, limiter) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.get("/rooms/" + roomId + "/sessions", query)];
+                    case 0: return [4 /*yield*/, this.get("/rooms/" + roomId + "/sessions", __assign(__assign({}, query), limiter))];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response.sessions.map(function (session) { return _this.convertObjectToCamelCase(session); })];
+                }
+            });
+        });
+    };
+    PageCallNew.prototype.getAllSessions = function (roomId, query) {
+        return __awaiter(this, void 0, void 0, function () {
+            var beforeSorted;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getSessionsRecursively(roomId, 0, query)];
+                    case 1:
+                        beforeSorted = (_a.sent())
+                            .map(function (session) { return _this.convertObjectToCamelCase(session); });
+                        return [2 /*return*/, beforeSorted.sort(function (a, b) {
+                                return (new Date(a.connectedAt).getTime() - new Date(b.connectedAt).getTime());
+                            })];
+                }
+            });
+        });
+    };
+    PageCallNew.prototype.getSessionsRecursively = function (roomId, offset, query) {
+        if (query === void 0) { query = {}; }
+        return __awaiter(this, void 0, void 0, function () {
+            var currentResult, done, _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.get("/rooms/" + roomId + "/sessions", __assign({ limit: '30', offset: offset + '', sort_by: '-connected_at' }, query))];
+                    case 1:
+                        currentResult = _b.sent();
+                        done = currentResult.paging.offset + 30 >= currentResult.paging.total;
+                        if (!done) return [3 /*break*/, 2];
+                        return [2 /*return*/, currentResult.sessions];
+                    case 2:
+                        _a = [currentResult.sessions];
+                        return [4 /*yield*/, this.getSessionsRecursively(roomId, offset + 30, query)];
+                    case 3: return [2 /*return*/, __spreadArrays.apply(void 0, _a.concat([_b.sent()]))];
                 }
             });
         });
@@ -291,7 +328,7 @@ var PageCallNew = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = this.getIntegratedTimeFromSessions;
-                        return [4 /*yield*/, this.getSessions(roomId)];
+                        return [4 /*yield*/, this.getAllSessions(roomId)];
                     case 1: return [2 /*return*/, _a.apply(this, [_b.sent()])];
                 }
             });

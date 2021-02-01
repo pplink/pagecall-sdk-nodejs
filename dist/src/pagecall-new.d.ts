@@ -67,7 +67,15 @@ export interface JoinRoomResult {
 export interface Limiter {
     offset?: string;
     limit?: string;
-    desc?: '-created_at' | '+created_at';
+    sort_by?: '-created_at' | '+created_at';
+}
+export interface GetSessionsResponse {
+    sessions: Session[];
+    paging: {
+        limit: number;
+        offset: number;
+        total: number;
+    };
 }
 export interface SessionQuery {
     is_connecting?: 'true';
@@ -81,7 +89,9 @@ export declare class PageCallNew {
     constructor(param: PageCallNewParam);
     createPublicRoom(name: string, layoutId: string): Promise<Room>;
     getRoom(roomId: string): Promise<Room>;
-    getSessions(roomId: string, query?: Limiter | SessionQuery): Promise<Session[]>;
+    getSessions(roomId: string, query?: SessionQuery, limiter?: Limiter): Promise<Session[]>;
+    getAllSessions(roomId: string, query?: SessionQuery): Promise<Session[]>;
+    private getSessionsRecursively;
     getRooms(offset: number, limit: number, desc: boolean, query?: object): Promise<Room[]>;
     terminateRoom(roomId: string): Promise<Room>;
     createUser(userId: string, name: string, metadata?: object): Promise<NewUser>;
