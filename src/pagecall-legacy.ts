@@ -22,7 +22,7 @@ export interface User {
   allowedTime: string;
   userData: string;
   connectedSessions: string;
-  finishd: string;
+  finished: string;
 }
 
 /**

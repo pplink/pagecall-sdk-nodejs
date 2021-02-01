@@ -74,7 +74,15 @@ export interface JoinRoomResult {
 export interface Limiter {
   offset?: string;
   limit?: string;
-  desc?: '-created_at' | '+created_at'
+  sort_by?: '-created_at' | '+created_at'
+}
+export interface GetSessionsResponse {
+  sessions: Session[];
+  paging: {
+    limit: number;
+    offset: number;
+    total: number;
+  };
 }
 export interface SessionQuery {
   is_connecting?: 'true';
@@ -110,9 +118,38 @@ export class PageCallNew {
     const response = await this.get<{room: object}>(`/rooms/${roomId}`);
     return this.convertObjectToCamelCase(response.room) as Room;
   }
-  async getSessions(roomId: string, query?: Limiter | SessionQuery): Promise<Session[]> {
-    const response = await this.get<{sessions: Session[]}>(`/rooms/${roomId}/sessions`, query);
+  async getSessions(roomId: string, query?: SessionQuery, limiter?: Limiter): Promise<Session[]> {
+    const response = await this.get<{sessions: Session[]}>(`/rooms/${roomId}/sessions`, {...query, ...limiter});
     return response.sessions.map(session => this.convertObjectToCamelCase(session)) as Session[];
+  }
+  async getAllSessions(roomId: string, query?: SessionQuery): Promise<Session[]> {
+    const beforeSorted = (await this.getSessionsRecursively(roomId, 0, query))
+      .map(session => this.convertObjectToCamelCase(session)) as Session[];
+    return beforeSorted.sort((a, b) =>
+      (new Date(a.connectedAt).getTime() - new Date(b.connectedAt).getTime())
+    );
+  }
+  private async getSessionsRecursively(
+    roomId: string,
+    offset: number,
+    query: SessionQuery = {}
+  ): Promise<Session[]> {
+    const currentResult: GetSessionsResponse
+      = await this.get<GetSessionsResponse>(`/rooms/${roomId}/sessions`, {
+        limit: '30',
+        offset: offset + '',
+        sort_by: '-connected_at',
+        ...query
+      });
+    const done = currentResult.paging.offset + 30 >= currentResult.paging.total;
+    if (done) {
+      return currentResult.sessions;
+    } else {
+      return [
+        ...currentResult.sessions,
+        ...await this.getSessionsRecursively(roomId, offset + 30, query),
+      ];
+    }
   }
   async getRooms(
     offset: number,
@@ -204,7 +241,7 @@ export class PageCallNew {
     });
   }
   async getIntegratedTime(roomId: string): Promise<number> {
-    return this.getIntegratedTimeFromSessions(await this.getSessions(roomId));
+    return this.getIntegratedTimeFromSessions(await this.getAllSessions(roomId));
   }
   private async getHtml(): Promise<string> {
     return axios.get(config.defaultAppEndpoint).then(result => result.data);
