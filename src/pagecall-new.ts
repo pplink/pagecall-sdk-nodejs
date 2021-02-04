@@ -96,7 +96,7 @@ export class PageCallNew {
   constructor(private param: PageCallNewParam) {
     const { apiEndpoint, appEndpoint, apiToken } = param;
     this.apiEndpoint = apiEndpoint || config.defaultApiEndpoint;
-    this.appEndpoint = appEndpoint || config.defaultApiEndpoint;
+    this.appEndpoint = appEndpoint || config.defaultAppEndpoint;
     this.apiToken = apiToken;
     this.axiosInstance = axios.create({
       baseURL: this.apiEndpoint,
@@ -245,7 +245,6 @@ export class PageCallNew {
   }
   private async getHtml(): Promise<string> {
     return axios.get(this.appEndpoint).then(result => {
-      console.log(result);
       return result.data;
     }).catch(err => console.error(err));
   }

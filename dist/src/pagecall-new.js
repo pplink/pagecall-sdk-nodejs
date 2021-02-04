@@ -72,7 +72,7 @@ var PageCallNew = /** @class */ (function () {
         this.param = param;
         var apiEndpoint = param.apiEndpoint, appEndpoint = param.appEndpoint, apiToken = param.apiToken;
         this.apiEndpoint = apiEndpoint || config.defaultApiEndpoint;
-        this.appEndpoint = appEndpoint || config.defaultApiEndpoint;
+        this.appEndpoint = appEndpoint || config.defaultAppEndpoint;
         this.apiToken = apiToken;
         this.axiosInstance = axios_1.default.create({
             baseURL: this.apiEndpoint,
@@ -338,7 +338,6 @@ var PageCallNew = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, axios_1.default.get(this.appEndpoint).then(function (result) {
-                        console.log(result);
                         return result.data;
                     }).catch(function (err) { return console.error(err); })];
             });
