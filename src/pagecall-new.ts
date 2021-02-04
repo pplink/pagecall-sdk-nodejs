@@ -244,7 +244,10 @@ export class PageCallNew {
     return this.getIntegratedTimeFromSessions(await this.getAllSessions(roomId));
   }
   private async getHtml(): Promise<string> {
-    return axios.get(this.appEndpoint).then(result => result.data).catch(err => console.error(err));
+    return axios.get(this.appEndpoint).then(result => {
+      console.log(result);
+      return result.data;
+    }).catch(err => console.error(err));
   }
   private injectAuthKeysToHtml(
     html: string,
