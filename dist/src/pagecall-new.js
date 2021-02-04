@@ -337,7 +337,7 @@ var PageCallNew = /** @class */ (function () {
     PageCallNew.prototype.getHtml = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, axios_1.default.get(config.defaultAppEndpoint).then(function (result) { return result.data; })];
+                return [2 /*return*/, axios_1.default.get(this.appEndpoint).then(function (result) { return result.data; })];
             });
         });
     };
