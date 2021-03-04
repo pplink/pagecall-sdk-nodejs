@@ -260,7 +260,7 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.joinRoom = function (roomId, userId, layoutId, options) {
+    PageCallNew.prototype.joinRoom = function (roomId, userId, layoutId, options, build) {
         return __awaiter(this, void 0, void 0, function () {
             var user, member, html, accessToken;
             return __generator(this, function (_a) {
@@ -271,7 +271,7 @@ var PageCallNew = /** @class */ (function () {
                         return [4 /*yield*/, this.createMember(roomId, userId, layoutId, options)];
                     case 2:
                         member = _a.sent();
-                        return [4 /*yield*/, this.getHtml()];
+                        return [4 /*yield*/, this.getHtml(build)];
                     case 3:
                         html = _a.sent();
                         accessToken = user.accessToken;
@@ -283,12 +283,12 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.replayRoom = function (roomId, userId) {
+    PageCallNew.prototype.replayRoom = function (roomId, userId, build) {
         return __awaiter(this, void 0, void 0, function () {
             var html, user, _a, accessToken;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.getHtml()];
+                    case 0: return [4 /*yield*/, this.getHtml(build)];
                     case 1:
                         html = _b.sent();
                         if (!userId) return [3 /*break*/, 3];
@@ -334,10 +334,10 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.getHtml = function () {
+    PageCallNew.prototype.getHtml = function (build) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, axios_1.default.get(this.appEndpoint).then(function (result) {
+                return [2 /*return*/, axios_1.default.get("" + this.appEndpoint + (build ? '?build=' + build : '')).then(function (result) {
                         return result.data;
                     }).catch(function (err) { return console.error(err); })];
             });

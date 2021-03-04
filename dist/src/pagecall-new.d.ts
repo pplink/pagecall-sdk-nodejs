@@ -98,8 +98,8 @@ export declare class PageCallNew {
     getUser(userId: string): Promise<NewUser>;
     getUsers(offset: number, limit: number, desc: boolean): Promise<NewUser[]>;
     createMember(roomId: string, userId: string, layoutId?: string, options?: object): Promise<Member>;
-    joinRoom(roomId: string, userId: string, layoutId?: string, options?: object): Promise<JoinRoomResult>;
-    replayRoom(roomId: string, userId?: string): Promise<JoinRoomResult>;
+    joinRoom(roomId: string, userId: string, layoutId?: string, options?: object, build?: string): Promise<JoinRoomResult>;
+    replayRoom(roomId: string, userId?: string, build?: string): Promise<JoinRoomResult>;
     postActionToSessions(sessionIds: string[], type: string, payload: object): Promise<{
         ok: boolean;
     }>;

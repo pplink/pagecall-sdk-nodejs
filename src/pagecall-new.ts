@@ -210,11 +210,12 @@ export class PageCallNew {
     roomId: string,
     userId: string,
     layoutId?: string,
-    options?: object
+    options?: object,
+    build?: string
   ): Promise<JoinRoomResult> {
     const user = await this.getUser(userId);
     const member = await this.createMember(roomId, userId, layoutId, options);
-    const html = await this.getHtml();
+    const html = await this.getHtml(build);
     const { accessToken } = user;
     return {
       html: this.injectAuthKeysToHtml(html, roomId, accessToken, 'meet'),
@@ -223,9 +224,10 @@ export class PageCallNew {
   }
   async replayRoom(
     roomId: string,
-    userId?: string
+    userId?: string,
+    build?: string
   ): Promise<JoinRoomResult> {
-    const html = await this.getHtml();
+    const html = await this.getHtml(build);
     const user = userId ? await this.getUser(userId) : { accessToken: ''};
     const { accessToken } = user;
     return {
@@ -243,8 +245,8 @@ export class PageCallNew {
   async getIntegratedTime(roomId: string): Promise<number> {
     return this.getIntegratedTimeFromSessions(await this.getAllSessions(roomId));
   }
-  private async getHtml(): Promise<string> {
-    return axios.get(this.appEndpoint).then(result => {
+  private async getHtml(build?: string): Promise<string> {
+    return axios.get(`${this.appEndpoint}${build ? '?build=' + build : ''}`).then(result => {
       return result.data;
     }).catch(err => console.error(err));
   }

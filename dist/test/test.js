@@ -4,7 +4,7 @@ var pagecall_new_1 = require("../src/pagecall-new");
 var newPagecall = new pagecall_new_1.PageCallNew({
     apiToken: 'DvHS_IO2KfOyoAsOWl2ukkGP2x86GKEKaPb3'
 });
-newPagecall.joinRoom('601ba327fc0ae40008bc26fa', '1612424654581_647', '', {})
+newPagecall.joinRoom('601ba327fc0ae40008bc26fa', '1612424654581_647', '', {}, 'jerry')
     .then(function (result) {
     console.log('result');
     console.log(result);
