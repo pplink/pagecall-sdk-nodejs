@@ -230,7 +230,7 @@ export class PageCallNew {
     build?: string
   ): Promise<string> {
     const member = await this.createMember(roomId, userId, layoutId, options);
-    return `${this.appEndpoint}/${roomId}?accessToken=${member.accessToken}${build ? '&build=' + build : ''}`;
+    return `${this.appEndpoint}/${roomId}?access_token=${member.accessToken}${build ? '&build=' + build : ''}`;
   }
   async replayRoom(
     roomId: string,

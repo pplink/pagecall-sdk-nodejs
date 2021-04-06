@@ -291,7 +291,7 @@ var PageCallNew = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.createMember(roomId, userId, layoutId, options)];
                     case 1:
                         member = _a.sent();
-                        return [2 /*return*/, this.appEndpoint + "/" + roomId + "?accessToken=" + member.accessToken + (build ? '&build=' + build : '')];
+                        return [2 /*return*/, this.appEndpoint + "/" + roomId + "?access_token=" + member.accessToken + (build ? '&build=' + build : '')];
                 }
             });
         });
