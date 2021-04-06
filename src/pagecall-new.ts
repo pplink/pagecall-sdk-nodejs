@@ -222,6 +222,16 @@ export class PageCallNew {
       roomId
     };
   }
+  async getURL(
+    roomId: string,
+    userId: string,
+    layoutId?: string,
+    options?: object,
+    build?: string
+  ): Promise<string> {
+    const member = await this.createMember(roomId, userId, layoutId, options);
+    return `${this.appEndpoint}/${roomId}?accessToken=${member.accessToken}${build ? '&build=' + build : ''}`;
+  }
   async replayRoom(
     roomId: string,
     userId?: string,

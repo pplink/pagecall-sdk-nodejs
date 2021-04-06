@@ -283,6 +283,19 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
+    PageCallNew.prototype.getURL = function (roomId, userId, layoutId, options, build) {
+        return __awaiter(this, void 0, void 0, function () {
+            var member;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.createMember(roomId, userId, layoutId, options)];
+                    case 1:
+                        member = _a.sent();
+                        return [2 /*return*/, this.appEndpoint + "/" + roomId + "?accessToken=" + member.accessToken + (build ? '&build=' + build : '')];
+                }
+            });
+        });
+    };
     PageCallNew.prototype.replayRoom = function (roomId, userId, build) {
         return __awaiter(this, void 0, void 0, function () {
             var html, user, _a, accessToken;
