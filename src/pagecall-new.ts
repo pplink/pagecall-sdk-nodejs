@@ -115,7 +115,9 @@ export class PageCallNew {
     const response = await this.post<{room: object}>('/rooms', {
       type: RoomType.Public,
       name,
-      layout_id: layoutId
+      layout_id: layoutId,
+      replay_layout_id: replayLayoutId,
+      replay_options_preset_id: replayOptionsPresetId
     });
     return this.convertObjectToCamelCase(response.room) as Room;
   }

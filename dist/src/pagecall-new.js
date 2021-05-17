@@ -90,7 +90,9 @@ var PageCallNew = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.post('/rooms', {
                             type: RoomType.Public,
                             name: name,
-                            layout_id: layoutId
+                            layout_id: layoutId,
+                            replay_layout_id: replayLayoutId,
+                            replay_options_preset_id: replayOptionsPresetId
                         })];
                     case 1:
                         response = _a.sent();
