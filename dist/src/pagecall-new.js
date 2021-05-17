@@ -82,7 +82,7 @@ var PageCallNew = /** @class */ (function () {
             }
         });
     }
-    PageCallNew.prototype.createPublicRoom = function (name, layoutId) {
+    PageCallNew.prototype.createPublicRoom = function (name, layoutId, replayLayoutId, replayOptionsPresetId) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {

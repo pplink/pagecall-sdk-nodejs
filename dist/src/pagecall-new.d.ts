@@ -87,7 +87,7 @@ export declare class PageCallNew {
     readonly apiToken: string;
     private axiosInstance;
     constructor(param: PageCallNewParam);
-    createPublicRoom(name: string, layoutId: string): Promise<Room>;
+    createPublicRoom(name: string, layoutId: string, replayLayoutId?: string, replayOptionsPresetId?: string): Promise<Room>;
     getRoom(roomId: string): Promise<Room>;
     getSessions(roomId: string, query?: SessionQuery, limiter?: Limiter): Promise<Session[]>;
     getAllSessions(roomId: string, query?: SessionQuery): Promise<Session[]>;

@@ -106,7 +106,12 @@ export class PageCallNew {
       }
     });
   }
-  async createPublicRoom(name: string, layoutId: string): Promise<Room> {
+  async createPublicRoom(
+    name: string,
+    layoutId: string,
+    replayLayoutId?: string,
+    replayOptionsPresetId?:string
+  ): Promise<Room> {
     const response = await this.post<{room: object}>('/rooms', {
       type: RoomType.Public,
       name,
