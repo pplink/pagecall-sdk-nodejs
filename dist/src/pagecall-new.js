@@ -245,7 +245,7 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.createMember = function (roomId, userId, layoutId, options) {
+    PageCallNew.prototype.createMember = function (roomId, userId, layoutId, options, optionsPresetId) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
@@ -253,6 +253,7 @@ var PageCallNew = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.post("/rooms/" + roomId + "/members", {
                             user_id: userId,
                             layout_id: layoutId || undefined,
+                            options_preset_id: optionsPresetId,
                             options: options
                         })];
                     case 1:
@@ -262,7 +263,7 @@ var PageCallNew = /** @class */ (function () {
             });
         });
     };
-    PageCallNew.prototype.joinRoom = function (roomId, userId, layoutId, options, build) {
+    PageCallNew.prototype.joinRoom = function (roomId, userId, layoutId, options, build, optionsPresetId) {
         return __awaiter(this, void 0, void 0, function () {
             var user, member, html, accessToken;
             return __generator(this, function (_a) {
@@ -270,7 +271,7 @@ var PageCallNew = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.getUser(userId)];
                     case 1:
                         user = _a.sent();
-                        return [4 /*yield*/, this.createMember(roomId, userId, layoutId, options)];
+                        return [4 /*yield*/, this.createMember(roomId, userId, layoutId, options, optionsPresetId)];
                     case 2:
                         member = _a.sent();
                         return [4 /*yield*/, this.getHtml(build)];

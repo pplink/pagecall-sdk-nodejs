@@ -204,11 +204,13 @@ export class PageCallNew {
     roomId: string,
     userId: string,
     layoutId?: string,
-    options?: object
+    options?: object,
+    optionsPresetId?:string
   ): Promise<Member> {
     const response = await this.post<{member: object}>(`/rooms/${roomId}/members`, {
       user_id: userId,
       layout_id: layoutId || undefined,
+      options_preset_id: optionsPresetId,
       options
     });
     return this.convertObjectToCamelCase(response.member) as Member;
@@ -218,10 +220,11 @@ export class PageCallNew {
     userId: string,
     layoutId?: string,
     options?: object,
-    build?: string
+    build?: string,
+    optionsPresetId?: string
   ): Promise<JoinRoomResult> {
     const user = await this.getUser(userId);
-    const member = await this.createMember(roomId, userId, layoutId, options);
+    const member = await this.createMember(roomId, userId, layoutId, options, optionsPresetId);
     const html = await this.getHtml(build);
     const { accessToken } = user;
     return {
